@@ -4,6 +4,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import IncomeScreen from './screens/IncomeScreen';
 import ExpensesScreen from './screens/ExpensesScreen';
 import PersonalityScreen from './screens/PersonalityScreen';
+import HomeScreen from './screens/HomeScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="Income" component={IncomeScreen} />
         <Stack.Screen name="Expenses" component={ExpensesScreen} />
         <Stack.Screen name="Personality" component={PersonalityScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
