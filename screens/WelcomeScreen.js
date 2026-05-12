@@ -8,7 +8,7 @@ export default function WelcomeScreen({ navigation }) {
       
       {/* Logo */}
       <View style={styles.logoContainer}>
-        <Text style={styles.logo}>trove</Text>
+        <Text style={styles.logo}>Trove</Text>
         <Text style={styles.tagline}>plan for everything you want to do</Text>
       </View>
 
