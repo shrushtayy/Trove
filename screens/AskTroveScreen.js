@@ -34,11 +34,12 @@ export default function AskTroveScreen({ navigation, route }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': 'YOUR_API_KEY_HERE',
+          'x-api-key': 'process.env.EXPO_PUBLIC_CLAUDE_API_KEY',
           'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model:'claude-sonnet-4-6',
           max_tokens: 1000,
           system: `You are Trove's math buddy — a calculator that speaks English. 
           
@@ -58,14 +59,25 @@ Your rules:
         }),
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      const data = JSON.parse(text);
+
+      if (data.error) {
+        throw new Error(data.error.message);
+      }
+
+      if (!data.content || !data.content[0]) {
+        throw new Error('Unexpected response: ' + JSON.stringify(data));
+      }
+
       const reply = data.content[0].text;
       setMessages(prev => [...prev, { id: Date.now(), role: 'assistant', text: reply }]);
+
     } catch (error) {
       setMessages(prev => [...prev, {
         id: Date.now(),
         role: 'assistant',
-        text: 'Something went wrong. Please check your connection and try again.',
+        text: 'Error: ' + error.message,
       }]);
     } finally {
       setLoading(false);
